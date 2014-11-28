@@ -1,5 +1,13 @@
 <?php
     session_start();
+
+    if($_GET['logout']==1 AND $_SESSION['id'])
+    {
+        session_destroy();
+        $message = "You have been logged out. Have a nice day!";
+        session_start();
+    }
+
     include("connection.php");
     if($_POST['submit'] == "Sign Up")
     {
@@ -47,12 +55,11 @@
 
                 mysqli_query($link, $query);
 
-                echo    "You've been signed up";
                 $_SESSION['id'] = mysqli_insert_id($link);
 
                 print_r($_SESSION);
 
-                //redirect to login page
+                header("Location:mainpage.php");
             }
         }
     }
@@ -69,7 +76,7 @@
         {
             $_SESSION['id'] = $row['id'];
 
-            //redirect to logged in page
+            header("Location:mainpage.php");
         }
         else
         {

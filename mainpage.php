@@ -1,4 +1,11 @@
 <?php
+    session_start();
+    include("connection.php");
+    $query = "SELECT diary FROM users where id='".$_SESSION['id']."' LIMIT 1";
+
+    $result = mysqli_query($link, $query);
+    $row = mysqli_fetch_array($result);
+    $diary = $row['diary'];
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +29,7 @@
             </div>
             <div class="pull-right">
                 <ul class="navbar-nav nav">
-                    <li><a href=" ">Log Out</a></li>
+                    <li><a href="index.php?logout=1">Log Out</a></li>
                 </ul>
             </div>
         </div>
@@ -32,8 +39,7 @@
         <div class="row">
 
             <div class="col-md-6 col-md-offset-3" id="mainTopRow">
-                <textarea class="form-control">
-                </textarea>
+                <textarea class="form-control"><?php echo $diary ?></textarea>
             </div>
         </div>
     </div>
